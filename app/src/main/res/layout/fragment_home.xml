@@ -6,11 +6,12 @@
     tools:context=".presentation.home.HomeFragment">
 
     <TextView
+        android:id="@+id/data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:textSize="24sp"
-        android:text="Home Fragment" />
+        tools:text="Data : " />
 
     <ProgressBar
         android:id="@+id/home_progress"
@@ -19,4 +20,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
+    <TextView
+        android:id="@+id/error_msg"
+        android:layout_width="wrap_content"
+        tools:text="Bir Hata oluştu"
+        android:layout_gravity="center"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"/>
 </FrameLayout>
