@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.ibrahimethemsen.firebasecallbackflow.common.setVisibility
-import com.ibrahimethemsen.firebasecallbackflow.common.userInfoMessage
 import com.ibrahimethemsen.firebasecallbackflow.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,8 +40,6 @@ class HomeFragment : Fragment() {
             }
             if (quote.data.isNotEmpty()){
                 binding.data.text = quote.data[0].name
-            }else{
-                requireContext().userInfoMessage("Veri yok", Toast.LENGTH_SHORT)
             }
         }
     }

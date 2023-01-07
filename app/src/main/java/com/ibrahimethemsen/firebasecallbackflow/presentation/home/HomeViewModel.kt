@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.ibrahimethemsen.firebasecallbackflow.common.FirebaseResult
+import com.ibrahimethemsen.firebasecallbackflow.common.getList
 import com.ibrahimethemsen.firebasecallbackflow.model.firebasemodel.QuotesModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +26,7 @@ class HomeViewModel @Inject constructor(
 
     fun getQuotes() {
         viewModelScope.launch(Dispatchers.IO) {
-            getQuotesList().onEach {
+            firestoreDb.collection(QUOTES_COLLECTION).getList(::quoteMapper).onEach {
                 handleResponse(it)
             }.catch { e ->
                 _uiStateLiveData.postValue(
@@ -83,6 +85,15 @@ class HomeViewModel @Inject constructor(
             trySend(FirebaseResult.Failed(it.message))
         }
         awaitClose()
+    }
+
+    private fun quoteMapper(document: QueryDocumentSnapshot): QuotesModel {
+        val name = document.get("name") as String
+        val content = document.get("content") as String
+        val quotation = document.get("quotation") as String
+        val writer = document.get("writer") as String
+        val year = document.get("year") as String
+        return QuotesModel(name, content, quotation, writer, year)
     }
 
     companion object {
